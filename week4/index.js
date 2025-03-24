@@ -71,8 +71,8 @@
 // }
 //===================== 1.2.2 write file ===================
 //1-writeFile or create & write
-// fs.writeFile('./text.txt','hello world',(error)=>{ 
-//     //overwrite the content of the file 
+// fs.writeFile('./text.txt','hello world',(error)=>{
+//     //overwrite the content of the file
 //     // if the file is exist it will overwrite the content of the file and remove the old content
 //     // // if the file is not exist it will create it
 //     error && console.log(error.message);
@@ -80,9 +80,9 @@
 // to solve the problem of overwriting the content of the file
 //data = read the file after
 // data += 'hello world';
-// then write the file 
+// then write the file
 
-// fs.writeFile('./text2.txt','',(error)=>{ //create empty file 
+// fs.writeFile('./text2.txt','',(error)=>{ //create empty file
 //     error && console.log(error.message);
 // })
 
@@ -90,7 +90,7 @@
 // try {
 //     // fs.writeFileSync('./text.txt','hello world1'); //overwrite the content of the file
 // } catch (error) {
-//     console.log(error.message); 
+//     console.log(error.message);
 // }
 
 // try {
@@ -144,9 +144,9 @@
 // }
 
 //===================== path ===================
-//fs.mkdirSync('./newFolder/newFolder4/mazen/shoura',{recursive:true}); 
+//fs.mkdirSync('./newFolder/newFolder4/mazen/shoura',{recursive:true});
 //'./basmala/text/node.txt' >> path basename dir
-//const path = require('path');
+//const path = require("path");
 // console.log(path.basename('./basmala/text/node.txt')); //node.txt
 // console.log(path.dirname('./basmala/text/node.txt')); //./basmala/text
 // console.log(path.extname('./basmala/text/node.txt')); //.txt
@@ -158,14 +158,23 @@
 //     ext: '.txt',
 //     name: 'node'
 // }));
+//====================== resolve =======================
+// resolve >> absolute path >> integrate paths
+// absolute path >> start with the root directory >> //C:\Users\Dell\.vscode\JSCourse\text.txt
+// relative path >> start with the current directory >> ./text.txt
+//console.log(path.resolve(...['.','./text.txt'])); //C:\Users\Dell\.vscode\JSCourse\text.txt
+//console.log(path.resolve('.','./text.txt')); //C:\Users\Dell\.vscode\JSCourse\text.txt
 //console.log(path.resolve('./basmala/text/node.txt'));
 // console.log(__dirname); //current directory  >> C:\Users\Dell\.vscode\JSCourse\week4
 // console.log(__filename); //current file path  >> C:\Users\Dell\.vscode\JSCourse\week4\index.js
 
+//======================== join ========================
+//console.log(path.join(__dirname, "./text.txt")); // C:\Users\Dell\.vscode\JSCourse\week4\text.txt
+
 //============================== fs/promises ===============================
 // function return promise
 // can do on it then and catch or async and await
-const fsPromises = require('fs/promises');
+//const fsPromises = require('fs/promises');
 //============================== read file ===============================
 // fsPromises.readFile('C:/Users/Dell/.vscode/JSCourse/week4/text.txt', 'utf-8').then((data) => {
 //     console.log(data);
@@ -173,18 +182,14 @@ const fsPromises = require('fs/promises');
 //     console.log(error.message);
 // });
 
-async function read() {
-    try {
-        const data = await fsPromises.readFile('C:/Users/Dell/.vscode/JSCourse/week4/text.txt', 'utf-8')
-        console.log(data);
-    } catch (error) {
-        console.log(error.message);
-    }
-}
-read();
+// async function read() {
+//     try {
+//         const data = await fsPromises.readFile('C:/Users/Dell/.vscode/JSCourse/week4/text.txt', 'utf-8')
+//         console.log(data);
+//     } catch (error) {
+//         console.log(error.message);
+//     }
+// }
+// read();
 //============================== write file ===============================
 //fsPromises.writeFile('./text.txt', 'hello node')
-
-
-
-
