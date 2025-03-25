@@ -94,9 +94,9 @@ const http = require("node:http");
 const app = http.createServer((req, res /** 2 positional parameter */) => {
     //console.log(req);
     // req >> request >> object {keys:values} >> event // readStream // any events can be emitted on it.
-    // any request from the browser is a get request. 
+    // any request from the browser is a get request.
     // res >> response >> object {keys:values} // writeStream
-    // console.log(req.url); // url >> property of the req object >> the url of the request.
+    // console.log(req.url); // url >> localHost:port/url >> property of the req object >> the url of the request.
     // console.log(req.method); // method >> property of the req object >> the method of the request.
     // res.write('hello from backend');
     // res.end(); // end the response.
@@ -111,14 +111,35 @@ const app = http.createServer((req, res /** 2 positional parameter */) => {
     // res.end();
     // res.end('hi');
     //res.writeHead(200, "OK", { "Content-Type": "text/plain" }); // write the header of the response.(statusCode,statusMessage,content-type)
-    const readStream = fs.createReadStream(path.join(__dirname, "./index.html"));
-    res.writeHead(200, "OK", { "Content-Type": "text/html" }); // write the header of the response.(statusCode,statusMessage,content-type)
-    readStream.on("data", (chunk) => {
-        res.write(chunk);
-    });
-    readStream.on("end", () => {
-        res.end();
-    });
+    // const readStream = fs.createReadStream(path.join(__dirname, "./index.html"));
+    // res.writeHead(200, "OK", { "Content-Type": "text/html" }); // write the header of the response.(statusCode,statusMessage,content-type)
+    // readStream.on("data", (chunk) => {
+    //     res.write(chunk);
+    // });
+    // readStream.on("end", () => {
+    //     res.end();
+    // });
+    //============== routing
+    const { url, method } = req;
+    if (url == "/" && method == "GET") {
+        // res.write("hello from home");
+        // res.end();
+        return res.end("hello from home"); // because you send one message
+    } else if (url == "/signup" && method == "GET") {
+        // res.write("hello from signup");
+        // res.end();
+        res.end("hello from signup");
+        return;
+    } else if (url == "/login" && method == "GET") {
+        // res.write("hello from login");
+        // res.end();
+        res.end("hello from login");
+        return;
+    } else {
+        // res.write("404 not found");
+        // res.end();
+        return res.end("404 not found");
+    }
 });
 // app >> object >> instance of server >> have keys:values >> value may be function >> instance of class (EventEmitter) >> can do on it all events (on , emit , .....).
 //app.listen(3000)// 3000 >> port number >> the port number that the app will run on it. // listen() method is used to listen for incoming requests.
