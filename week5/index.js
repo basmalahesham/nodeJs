@@ -1,9 +1,10 @@
-//=================== stream ===================
+//=============================== stream =========================
 // stream is a collection of data that might not be available all at once and doesn't have to fit entirely in memory.
 // sending data in chunks(parts)(like a stream of water) instead of all at once.
-const fs = require('node:fs'); // const fs = require('fs');
-const EventEmitter = require('events'); // const EventEmitter = require('node:events');
-const path = require('node:path'); // const path = require('path');
+// any builtin module can call it as ('node:module_name') or ('module_name only').
+const fs = require("node:fs"); // const fs = require('fs');
+const EventEmitter = require("events"); // const EventEmitter = require('node:events');
+const path = require("node:path"); // const path = require('path');
 // createReadStream() method is used to read data from a file as a stream of data.
 //const readStream = fs.createReadStream(path.resolve('.','./text.txt'));
 //const readStream = fs.createReadStream(path.join(__dirname,'./text.txt'),'utf-8');
@@ -40,7 +41,7 @@ const path = require('node:path'); // const path = require('path');
 //     console.log('The file is closed');
 // });
 // // error >> event >> emitted when error happens.
-// readStream.on('error',(error)=>{ // 2 event emit here error & close because he was try to open the file 
+// readStream.on('error',(error)=>{ // 2 event emit here error & close because he was try to open the file
 //     console.log(error.message);
 // });
 // // pause >> event >> emitted when the stream is paused.
@@ -61,27 +62,76 @@ const path = require('node:path'); // const path = require('path');
 
 //===================== createWriteStream() =====================
 // createWriteStream() method is used to write data to a file as a stream of data.
-const writeStream = fs.createWriteStream(path.join(__dirname,'./data.txt'));
+//const writeStream = fs.createWriteStream(path.join(__dirname,'./data.txt'));
 // readStream.on('data',(chunk)=>{
 //     writeStream.write(chunk); // write the data to the file.
 // });
 // problem >> backpressure >> when the writeStream is slower than the readStream.
 //readStream.pipe(writeStream); // pipe() method is used to read the data from the readStream and write it to the writeStream.
 
-const readStream = fs.createReadStream(path.join(__dirname,'./text.txt'),{
-    //highWaterMark: 64*1024 // 64kb >> default value of highWaterMark.
-    //highWaterMark: 2,
-    //highWaterMark: 2 * 1024,//bytes >> 2kb
-    encoding: 'utf-8',
-    start:2,
-    end: 9,
-    //autoClose: false, // default true.
-    //emitClose: false, // default true.
-});
+// const readStream = fs.createReadStream(path.join(__dirname,'./text.txt'),{
+//     //highWaterMark: 64*1024 // 64kb >> default value of highWaterMark.
+//     //highWaterMark: 2,
+//     //highWaterMark: 2 * 1024,//bytes >> 2kb
+//     encoding: 'utf-8',
+//     start:2,
+//     end: 9,
+//     //autoClose: false, // default true.
+//     //emitClose: false, // default true.
+// });
 // createReadStream >> read 64kb
-readStream.on('data',(chunk)=>{
-    console.log(chunk);
-    //writeStream.write(chunk);
-    console.log('==================================================');
-    console.log('==================================================');
+// readStream.on('data',(chunk)=>{
+//     console.log(chunk);
+//     //writeStream.write(chunk);
+//     console.log('==================================================');
+//     console.log('==================================================');
+// });
+
+//============================================================================
+//=================================== http ===================================
+// http is a module that provides the ability to create http servers and clients.
+const http = require("node:http");
+const app = http.createServer((req, res /** 2 positional parameter */) => {
+    //console.log(req);
+    // req >> request >> object {keys:values} // readStream // any events can be emitted on it.
+    // any request from the browser is a get request. // writeStream
+    // res >> response >> object {keys:values}
+    // console.log(req.url); // url >> property of the req object >> the url of the request.
+    // console.log(req.method); // method >> property of the req object >> the method of the request.
+    // res.write('hello from backend');
+    // res.end(); // end the response.
+    // const readStream = fs.createReadStream(path.join(__dirname,'./text.txt'));
+    // readStream.on('data',(chunk)=>{
+    //     res.write(chunk);
+    // });
+    // readStream.on('end',()=>{
+    //     res.end();
+    // });
+    // res.write('hi');
+    // res.end();
+    // res.end('hi');
+    //res.writeHead(200, "OK", { "Content-Type": "text/plain" }); // write the header of the response.(statusCode,statusMessage,content-type)
+    const readStream = fs.createReadStream(path.join(__dirname, "./index.html"));
+    res.writeHead(200, "OK", { "Content-Type": "text/html" }); // write the header of the response.(statusCode,statusMessage,content-type)
+    readStream.on("data", (chunk) => {
+        res.write(chunk);
+    });
+    readStream.on("end", () => {
+        res.end();
+    });
 });
+// app >> object >> have keys:values >> value may be function >> instance of class (EventEmitter) >> can do on it all events (on , emit , .....).
+//app.listen(3000)// 3000 >> port number >> the port number that the app will run on it. // listen() method is used to listen for incoming requests.
+const port = 3000;
+app.listen(port, () => {
+    console.log(`The server is running on port ${port}`);
+});
+// ip ? 127.0.0.1 >> localhost >> the ip address of the server.
+// ip ? 127.0.0.1:3000 >> localhost:port >> domain
+// http://localhost:3000/ >> the url of the server.
+app.on("error", (error) => {
+    console.log(error.message);
+});
+// ctrl + s >> save the file. >> restart the server.
+// ctrl + c >> stop the server. >> leave the terminal.
+// node --watch file_name >> watch the file and run it when the file is changed. >> run the file automatically when the file is changed
