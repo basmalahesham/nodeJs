@@ -93,9 +93,9 @@ const path = require("node:path"); // const path = require('path');
 const http = require("node:http");
 const app = http.createServer((req, res /** 2 positional parameter */) => {
     //console.log(req);
-    // req >> request >> object {keys:values} // readStream // any events can be emitted on it.
-    // any request from the browser is a get request. // writeStream
-    // res >> response >> object {keys:values}
+    // req >> request >> object {keys:values} >> event // readStream // any events can be emitted on it.
+    // any request from the browser is a get request. 
+    // res >> response >> object {keys:values} // writeStream
     // console.log(req.url); // url >> property of the req object >> the url of the request.
     // console.log(req.method); // method >> property of the req object >> the method of the request.
     // res.write('hello from backend');
@@ -120,7 +120,7 @@ const app = http.createServer((req, res /** 2 positional parameter */) => {
         res.end();
     });
 });
-// app >> object >> have keys:values >> value may be function >> instance of class (EventEmitter) >> can do on it all events (on , emit , .....).
+// app >> object >> instance of server >> have keys:values >> value may be function >> instance of class (EventEmitter) >> can do on it all events (on , emit , .....).
 //app.listen(3000)// 3000 >> port number >> the port number that the app will run on it. // listen() method is used to listen for incoming requests.
 const port = 3000;
 app.listen(port, () => {
@@ -128,10 +128,13 @@ app.listen(port, () => {
 });
 // ip ? 127.0.0.1 >> localhost >> the ip address of the server.
 // ip ? 127.0.0.1:3000 >> localhost:port >> domain
+// url >> protocol://domain >> ip:port
+// http:// >> protocol
 // http://localhost:3000/ >> the url of the server.
+// http://127.0.0.1:3000/ >> the url of the server.
 app.on("error", (error) => {
     console.log(error.message);
 });
 // ctrl + s >> save the file. >> restart the server.
-// ctrl + c >> stop the server. >> leave the terminal.
+// ctrl + c >> stop the server. >> leave the terminal.(terminate the process).
 // node --watch file_name >> watch the file and run it when the file is changed. >> run the file automatically when the file is changed
