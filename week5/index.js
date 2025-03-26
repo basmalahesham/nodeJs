@@ -125,12 +125,25 @@ const app = http.createServer((req, res /** 2 positional parameter */) => {
         // res.write("hello from home");
         // res.end();
         return res.end("hello from home"); // because you send one message
-    } else if (url == "/signup" && method == "GET") {
+    } /* else if (url == "/signup" && method == "GET") {
         // res.write("hello from signup");
         // res.end();
         res.end("hello from signup");
         return;
-    } else if (url == "/login" && method == "GET") {
+    } */ else if (url == "/signup" && method == "POST") {
+        let bodyData = "";
+        req.on("data", (chunk) => {
+            //console.log(chunk);
+            bodyData += chunk;
+        });
+        req.on('end',()=>{
+            //console.log(bodyData);//string
+            bodyData = JSON.parse(bodyData);//object
+            console.log(bodyData);
+            res.end('done');
+        });
+        return;
+    }else if (url == "/login" && method == "GET") {
         // res.write("hello from login");
         // res.end();
         res.end("hello from login");
@@ -138,6 +151,7 @@ const app = http.createServer((req, res /** 2 positional parameter */) => {
     } else {
         // res.write("404 not found");
         // res.end();
+        res.writeHead(404, "Not Found"/**by default message is not found */,);
         return res.end("404 not found");
     }
 });
@@ -153,9 +167,9 @@ app.listen(port, () => {
 // http:// >> protocol
 // http://localhost:3000/ >> the url of the server.
 // http://127.0.0.1:3000/ >> the url of the server.
-app.on("error", (error) => {
-    console.log(error.message);
-});
+// app.on("error", (error) => {
+//     console.log(error.message);
+// });
 // ctrl + s >> save the file. >> restart the server.
 // ctrl + c >> stop the server. >> leave the terminal.(terminate the process).
 // node --watch file_name >> watch the file and run it when the file is changed. >> run the file automatically when the file is changed
