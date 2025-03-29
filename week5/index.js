@@ -146,8 +146,8 @@ const app = http.createServer((req, res /** 2 positional parameter */) => {
     }else if (url == "/login" && method == "GET") {
         // res.write("hello from login");
         // res.end();
-        res.end("hello from login");
-        return;
+        res.end("hello from login"); // end بتنهى the response
+        return;// بتنهى the function and return the value.
     } else {
         // res.write("404 not found");
         // res.end();
