@@ -473,7 +473,7 @@ function third() {
     }, 1000);
 }
 //console.log(second());
-//second() >> string
+//second() >> string >> implementation of second
 //second >> declaration f(){//body} >> call
 //first(second()); x
 //first(second); // callback function

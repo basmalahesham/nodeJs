@@ -170,6 +170,3 @@ app.listen(port, () => {
 // app.on("error", (error) => {
 //     console.log(error.message);
 // });
-// ctrl + s >> save the file. >> restart the server.
-// ctrl + c >> stop the server. >> leave the terminal.(terminate the process).
-// node --watch file_name >> watch the file and run it when the file is changed. >> run the file automatically when the file is changed
