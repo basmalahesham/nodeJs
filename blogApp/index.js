@@ -161,6 +161,75 @@ app.post("/blog", (req, res, next) => {
     );
 });
 // get all blogs >> get >> /blogs
+app.get("/blogs", (req, res, next) => {
+    // get all blogs from DB
+    let sql = `
+        SELECT 
+            blogs.id as blogId,
+            blogs.title,
+            blogs.content,
+            blogs.created_at,
+            CONCAT(users.f_name, ' ', users.l_name) as author
+        FROM 
+            blogs 
+        JOIN 
+            users ON blogs.u_id = users.id
+        WHERE 
+            blogs.is_deleted = 0
+        ORDER BY 
+            blogs.created_at DESC
+    `;
+
+    dbConnection.execute(sql, (error, result) => {
+        if (error) {
+            return res.status(500).json({ message: "server error", error });
+        }
+
+        // fail condition
+        if (result.length == 0) {
+            return res.status(404).json({ message: "No blogs found" });
+        }
+
+        // success condition
+        return res.status(200).json({ message: "done", blogs: result });
+    });
+});
+// get blog by id >> get >> /blog/:id
+app.get("/blog/:id", (req, res, next) => {
+    // get data from req
+    const { id } = req.params;
+    //console.log({ id });
+
+    let sql = `
+        SELECT 
+            blogs.id as blogId,
+            blogs.title,
+            blogs.content,
+            blogs.created_at,
+            CONCAT(users.f_name, ' ', users.l_name) as author
+        FROM 
+            blogs 
+        JOIN 
+            users ON blogs.u_id = users.id
+        WHERE 
+            blogs.id = ? AND blogs.is_deleted = 0
+    `;
+    let values = [id];
+
+    dbConnection.execute(sql, values, (error, result) => {
+        if (error) {
+            return res.status(500).json({ message: "server error", error });
+        }
+
+        // fail condition
+        if (result.length == 0) {
+            return res.status(404).json({ message: "blog not found" });
+        }
+
+        // success condition
+        return res.status(200).json({ message: "done", blog: result[0] });
+    });
+});
 // delete blog >> delete >> /blog/:id >> hard delete
 /* app.delete("/blog/:id", (req, res, next) => {
     // get data from req
