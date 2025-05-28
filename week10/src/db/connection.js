@@ -1,6 +1,6 @@
 // create connection
 import { Sequelize } from "sequelize";
-const sequelize = new Sequelize(
+export const sequelize = new Sequelize(
     "hti_sequelize", // database name
     "root", // username
     "", // password
@@ -20,4 +20,8 @@ export async function checkConnection() {
         .catch((err) => {
             console.error("Fail to connect to the database:", err.message);
         });
+}
+export async function syncModels() {
+    // sync all models
+    await sequelize.sync();
 }
