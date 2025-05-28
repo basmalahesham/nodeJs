@@ -1,0 +1,10 @@
+1-ORM >> object  relational     mapping
+         JS code RDMS >> mysql  methods >> map method by query
+         JS code >> ORM >> بتعمل mapping (RDMS بتحول الجافا سكريبت كود ل )
+         create({name:"ahmed",email:"a@g.com"}) >> ORM >> insert into users values ...
+         sequelize - typeorm - prisma
+2-how to connect nodeJS with ORM >> sequelize >> npm
+3-How to create a model in sequelize >> models
+4-sync() >>> options
+5-getter - setter - virtuals
+6-validation - constraints
