@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createProduct, deleteProduct, getAllProducts, updateProduct } from './product.service.js';
+import { createProduct, deleteProduct, getAll, getAll2, updateProduct } from './product.service.js';
 const router = Router();
 //add product
 router.post('/',createProduct);
@@ -8,5 +8,5 @@ router.put('/:id',updateProduct);
 // delete product
 router.delete('/:id',deleteProduct)
 // get all products
-router.get('/',getAllProducts);
+router.get('/',getAll);
 export default router;
