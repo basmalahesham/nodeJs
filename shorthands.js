@@ -5,3 +5,4 @@
 // tab >> auto complete the file name. >> auto complete the command in the terminal. >> auto complete the path in the terminal.
 // npm init -y >> create package.json file
 // ctrl + space >>
+// node --watch --env-file=.env .\index.js

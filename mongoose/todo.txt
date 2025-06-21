@@ -1,0 +1,11 @@
+>> mongoose >> ODM
+>> object data modleing(ODM) >> js
+>> data >> db
+>> data >> model >> db
+        1-
+        2-
+        3-
+        4-
+        5-
+        6-
+        7-
